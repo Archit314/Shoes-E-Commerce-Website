@@ -22,12 +22,17 @@ export default {
   },
 
   production: {
-    use_env_variable: process.env.DATABASE_URL,
+    username: process.env.DB_USER,       // should be 'username', not 'user'
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    host: process.env.DB_HOST,
+    port: Number(process.env.DB_PORT),
     dialect: 'postgres',
     dialectOptions: {
       ssl: {
         require: true,
-        rejectUnauthorized: false // Render requires this to be false
+        rejectUnauthorized: true,
+        ca: fs.readFileSync('./ca.pem').toString()
       }
     }
   }
