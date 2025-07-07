@@ -4,9 +4,9 @@ export const signUp = async (req, res) => {
 
     try {
         
-        const {fullName, email, password, confirmPassword} = req.body;
+        const {fullName, mobileNumber, email, password, confirmPassword} = req.body;
 
-        if(!fullName || !email || !password || !confirmPassword) {
+        if(!fullName || !email || !password || !confirmPassword || !mobileNumber) {
             return res.status(422).json({status: 422, message: "All fields are required"});
         }
 
@@ -19,13 +19,13 @@ export const signUp = async (req, res) => {
         }
 
         const userService = new UserService()
-        const createdUser = await userService.userSignUp(fullName, email, password, confirmPassword, res)
+        const createdUser = await userService.userSignUp(fullName, email, password, confirmPassword, mobileNumber, res)
         
         if(createdUser.status != 200){
-            return res.status(422).json({status: createdUser.status, message: createdUser.message})
+            return res.status(createdUser.status).json({status: createdUser.status, message: createdUser.message})
         }
 
-        return res.status(200).json({status: 200, message: 'User signed up successfully', data: {fullName, email}});
+        return res.status(createdUser.status).json({status: createdUser.status, message: createdUser.message, data: createdUser.data});
     } catch (error) {
         console.log('Error in UserController signUp:', error.message);
         return res.status(500).json({status: 500, message: "Internal Server Error"});

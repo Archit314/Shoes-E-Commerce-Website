@@ -1,8 +1,11 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+// const {
+//   Model
+// } = require('sequelize');
+import { DataTypes, Model } from 'sequelize';
+
+// module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   class User extends Model {
     /**
      * Helper method for defining associations.
@@ -26,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       unique: true
     },
-    mobile: {
+    mobile_number: {
       type: DataTypes.STRING,
       unique: true
     },

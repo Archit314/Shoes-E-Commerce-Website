@@ -1,6 +1,9 @@
 import bcrypt from 'bcryptjs' // Importing bcrypt for hashing passwords
 import jwt from 'jsonwebtoken' // Importing jsonwebtoken for creating JWT tokens
 
+const db = await import('../../../models/index.js')
+const {User} = db.default
+
 export default class UserService{
 
     async generateHashPassword(password){
@@ -36,12 +39,19 @@ export default class UserService{
         return jwtToken
     }
 
-    async userSignUp(fullName, email, password, confirmPassword, res){
+    async userSignUp(fullName, email, password, confirmPassword, mobileNumber, res){
 
         // Safety checks it user already exist with email or mobile number
-        const existUserWithEmail = await User.findOne({email})
+        const existUserWithEmail = await User.findOne({ where: { email } });
         if(existUserWithEmail){
             return {status: 422, message: `Usre already exist with email: ${email}`}
+        }
+
+        if(mobileNumber){
+            const existUserWithMobile = await User.findOne({ where: { mobile_number: mobileNumber } });
+            if(existUserWithMobile){
+                return {status: 422, message: `User already exist with mobile number: ${mobileNumber}`}
+            }
         }
 
         const encryptedPassword = await this.generateHashPassword(password)
@@ -51,7 +61,8 @@ export default class UserService{
 
         // Creating new user on mongo DB cluster:
         const newUser = new User({
-            fullName: fullName,
+            name: fullName,
+            mobile_number: mobileNumber,
             email: email,
             password: encryptedPassword,
             confirmPassword: confirmPassword
@@ -59,7 +70,7 @@ export default class UserService{
 
         if(newUser){
             // Generating new JWT token:
-            const generatedJwtToken = await this.generateJwtToken({userId: newUser._id, email: newUser.email}, res)
+            const generatedJwtToken = await this.generateJwtToken({userId: newUser.id, mobileNumber: newUser.mobile_number, email: newUser.email}, res)
             if(!generatedJwtToken){
                 return {status: 422, message: `User registration failed`}
             }
@@ -69,8 +80,9 @@ export default class UserService{
 
             // Generating response for frontend:
             const response = {
-                userId: newUser._id,
-                fullName: newUser.fullName,
+                userId: newUser.id,
+                name: newUser.name,
+                mobileNumber: newUser.mobile_number,
                 email: newUser.email,
                 accessToken: generatedJwtToken
             }
