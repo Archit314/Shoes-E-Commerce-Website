@@ -42,7 +42,13 @@ export const signIn = async (req, res) => {
             return res.status(422).json({status: 422, message: "Email and password are required"});
         }
 
-        return res.status(200).json({status: 200, message: 'User signed in successfully', data: {email}});
+        const userService = new UserService()
+        const getSignInDetail = await userService.userSignIn(email, password, res)
+        if(getSignInDetail.status !== 200){
+            return res.status(getSignInDetail.status).json({status: getSignInDetail.status, message: getSignInDetail.message})
+        }
+
+        return res.status(getSignInDetail.status).json({status: getSignInDetail.status, message: getSignInDetail.message, data: getSignInDetail.data});
         
     } catch (error) {
         console.log('Error in UserController signIn:', error.message);

@@ -92,4 +92,42 @@ export default class UserService{
             return {status: 422, message: `Failed to signup user into our system`}
         }
     }
+
+    async getJwtToken(password, encryptedPassword, tokenObject, res){
+
+        const passwordCorrect = await bcrypt.compare(password, encryptedPassword)
+        if (!passwordCorrect) {
+            return false
+        }
+        console.log('Enter password and encrypted password are equal');
+
+        // Generating JWT token:
+        const generatedToken = await this.generateJwtToken(tokenObject, res)
+        if(!generatedToken){
+            return false
+        }
+
+        return generatedToken
+    }
+
+    async userSignIn(email, password, res){
+
+        const user = await User.findOne({ where: { email } });
+        if(!user){
+            return {status: 422, message: `User not exist with email: ${email}`}
+        }
+
+        const tokenObject = {
+            userId: user.id,
+            email: user.email,
+            mobileNumber: user.mobile_number
+        }
+
+        const getJwtToken = await this.getJwtToken(password, user.password, tokenObject, res)
+        if(!getJwtToken){
+            return {status: 422, message: `Incorrect credentials`}
+        }
+
+        return {status: 200, message: `User sign-in successfully`, data: getJwtToken}
+    }
 }
