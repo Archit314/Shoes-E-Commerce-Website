@@ -19,5 +19,16 @@ export default {
         ca: fs.readFileSync('./ca.pem').toString()
       }
     }
+  },
+
+  production: {
+    use_env_variable: process.env.DATABASE_URL,
+    dialect: 'postgres',
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false // Render requires this to be false
+      }
+    }
   }
 };
