@@ -1,0 +1,51 @@
+'use strict';
+// const {
+//   Model
+// } = require('sequelize');
+import { DataTypes, Model } from 'sequelize';
+
+export default (sequelize) => {
+  class Media extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    static associate(models) {
+      // define association here
+    }
+  }
+  Media.init({
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true
+    },
+    url: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    owner_type: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    owner_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    tag: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    meta: {
+      type: DataTypes.JSON,
+      allowNull: true
+    }
+  }, {
+    sequelize,
+    modelName: 'Media',
+    tableName: 'Media',
+    timestamps: true
+  });
+  return Media;
+};
