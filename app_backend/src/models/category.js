@@ -4,7 +4,7 @@
 // } = require('sequelize');
 import { DataTypes, Model } from 'sequelize';
 
-export default (sequelize, DataTypes) => {
+export default (sequelize) => {
   class Category extends Model {
     /**
      * Helper method for defining associations.
@@ -16,8 +16,14 @@ export default (sequelize, DataTypes) => {
     }
   }
   Category.init({
-    name: DataTypes.STRING,
-    is_active: DataTypes.BOOLEAN
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    is_active: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true
+    }
   }, {
     sequelize,
     modelName: 'Category',
