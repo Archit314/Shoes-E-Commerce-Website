@@ -6,6 +6,8 @@ const app = express();
 import { connectDb } from './app/provider/aiven database/databaseConnection.js';
 import authRoutes from './start/routes/Users/authRoutes.js';
 import { startPingScheduler } from './app/schedulers/pingScheduler.js';
+import categoryUserRoutes from './start/routes/Categories/categoryUserRoutes.js';
+import categoryAdminRoutes from './start/routes/Categories/categoryAdminRoutes.js';
 
 app.use(express.json())
 app.use(cookieParser())
@@ -16,6 +18,8 @@ app.get('/ping', (req, res) => {
 })
 
 app.use('/v1/api/user', authRoutes)
+app.use('/v1/api/category', categoryUserRoutes)
+app.use('/v1/api/admin/category', categoryAdminRoutes)
 
 app.listen(3000, () => {
   console.log('Server is running on http://localhost:3000');
