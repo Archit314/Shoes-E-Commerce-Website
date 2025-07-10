@@ -13,6 +13,11 @@ export default (sequelize) => {
      */
     static associate(models) {
       // define association here
+      Media.belongsTo(models.Category, {
+        foreignKey: 'owner_id',
+        constraints: false,
+        as: 'category'
+      });
     }
   }
   Media.init({

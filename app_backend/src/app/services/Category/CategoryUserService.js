@@ -5,7 +5,14 @@ export default class CategoryUserService {
 
     async getAllCategories() {
 
-        const categories = await Category.findAll()
+        const categories = await Category.findAll({
+            include: [
+                {
+                association: 'media',
+                attributes: ['id', 'url', 'tag', 'meta'] // pick only necessary fields
+                }
+            ]
+        });
         if(categories.length === 0){
             return {status: 422, message: 'No categories found'}
         }
