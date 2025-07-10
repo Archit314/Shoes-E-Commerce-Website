@@ -55,3 +55,41 @@ export const signIn = async (req, res) => {
         return res.status(500).json({status: 500, message: "Internal Server Error"});
     }
 }
+
+export const logout = async (req, res) => {
+    try {
+
+        const requestCookie = req.cookies.jwt_token;
+        if(!requestCookie){
+            return res.status(422).json({status: 422, message: `User not logged in`})
+        }
+        
+        res.clearCookie('jwt_token')
+        console.log(`User cookie remoced successfully`);
+
+        return res.status(200).json({status: 200, message: `User logged out successfully`})
+    } catch (error) {
+        console.log(`Error in UserController -> logout: `, error.message);
+        return res.status(500).json({status: 500, message: `Internal server error`})
+    }
+}
+
+export const removeAccount = async (req, res) => {
+
+    try {
+        
+        const userId = req.params.id;
+        if(!userId){
+            return res.status(422).json({status: 422, message: "User ID is required"});
+        }
+        const userService = new UserService()
+        const removedUser = await userService.removeUserAccount(userId)
+        if(removedUser.status != 200){
+            return res.status(removedUser.status).json({status: removedUser.status, message: removedUser.message})
+        }
+        return res.status(removedUser.status).json({status: removedUser.status, message: removedUser.message});
+    } catch (error) {
+        console.log('Error in UserController removeAccount:', error.message);
+        return res.status(500).json({status: 500, message: "Internal Server Error"});
+    }
+}
