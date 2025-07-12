@@ -9,6 +9,8 @@ import { startPingScheduler } from './app/schedulers/pingScheduler.js';
 import categoryUserRoutes from './start/routes/Categories/categoryUserRoutes.js';
 import categoryAdminRoutes from './start/routes/Categories/categoryAdminRoutes.js';
 import mediaAdminRoutes from './start/routes/Media/mediaAdminRoutes.js';
+import brandAdminRoutes from './start/routes/Brands/brandAdminRoutes.js';
+import brandUserRoutes from './start/routes/Brands/brandUserRoutes.js';
 
 app.use(express.json())
 app.use(cookieParser())
@@ -22,6 +24,8 @@ app.use('/v1/api/user', authRoutes)
 app.use('/v1/api/category', categoryUserRoutes)
 app.use('/v1/api/admin/category', categoryAdminRoutes)
 app.use('/v1/api/admin/media', mediaAdminRoutes)
+app.use('/v1/api/admin/brand', brandAdminRoutes)
+app.use('/v1/api/user/brand', brandUserRoutes)
 
 app.listen(3000, () => {
   console.log('Server is running on http://localhost:3000');
