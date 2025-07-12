@@ -8,8 +8,8 @@ export default class CategoryUserService {
         const categories = await Category.findAll({
             include: [
                 {
-                association: 'media',
-                attributes: ['id', 'url', 'tag', 'meta'] // pick only necessary fields
+                    association: 'media',
+                    attributes: ['id', 'url', 'tag', 'meta'] // pick only necessary fields
                 }
             ]
         });

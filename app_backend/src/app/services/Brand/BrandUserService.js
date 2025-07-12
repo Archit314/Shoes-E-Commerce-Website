@@ -6,7 +6,14 @@ export default class BrandUserService {
     async getBrands() {
 
         try {
-            const brands = await Brand.findAll();
+            const brands = await Brand.findAll({
+                include: [
+                    {
+                        association: 'media',
+                        attributes: ['id', 'url', 'tag', 'meta'] // pick only necessary fields
+                    }
+                ]
+            });
             if(brands.length === 0){
                 return {status: 422, message: 'No brands found'}
             }

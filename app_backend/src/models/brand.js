@@ -13,6 +13,16 @@ export default (sequelize) => {
      */
     static associate(models) {
       // define association here
+
+      // Define association with Media
+      Brand.hasMany(models.Media, {
+        foreignKey: 'owner_id',
+        constraints: false,
+        scope: {
+          owner_type: 'BRAND'
+        },
+        as: 'media'
+      });
     }
   }
   Brand.init({

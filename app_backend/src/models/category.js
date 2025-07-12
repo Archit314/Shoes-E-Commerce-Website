@@ -13,6 +13,8 @@ export default (sequelize) => {
      */
     static associate(models) {
       // define association here
+
+      // Define association with Media
       Category.hasMany(models.Media, {
         foreignKey: 'owner_id',
         constraints: false,
