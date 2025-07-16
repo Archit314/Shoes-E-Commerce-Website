@@ -10,6 +10,10 @@ export default class CategoryUserService {
                 {
                     association: 'media',
                     attributes: ['id', 'url', 'tag', 'meta'] // pick only necessary fields
+                },
+                {
+                    association: 'brands',
+                    attributes: ['id', 'name', 'description', 'is_active'] // pick only necessary fields
                 }
             ]
         });
