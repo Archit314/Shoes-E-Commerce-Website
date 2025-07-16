@@ -44,7 +44,7 @@ export default (sequelize) => {
       allowNull: false
     },
     owner_id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       allowNull: false
     },
     tag: {

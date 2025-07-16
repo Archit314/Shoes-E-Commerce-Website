@@ -21,8 +21,14 @@ export default (sequelize) => {
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true
     },
-    brand_id: DataTypes.INTEGER,
-    category_id: DataTypes.INTEGER
+    brand_id: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
+    category_id: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    }
   }, {
     sequelize,
     modelName: 'CategoryBrand',

@@ -9,10 +9,6 @@ export const createCategory = async (req, res) => {
             return res.status(422).json({status: 422, message: 'Category name is required'});
         }
 
-        if(!Array.isArray(brandIds) || brandIds.length === 0){
-            return res.status(422).json({status: 422, message: 'At least one brand ID is required'});
-        }
-
         const categoryAdminService = new CategoryAdminService()
         const createCategory = await categoryAdminService.createCategory(name, brandIds)
         if(createCategory.status != 200){

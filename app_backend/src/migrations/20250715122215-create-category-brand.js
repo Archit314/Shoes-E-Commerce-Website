@@ -10,7 +10,8 @@ export default {
         defaultValue: Sequelize.UUIDV4
       },
       brand_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        allowNull: false,
         references: {
           model: 'Brands',
           key: 'id'
@@ -18,7 +19,8 @@ export default {
         onDelete: 'CASCADE'
       },
       category_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        allowNull: false,
         references: {
           model: 'Categories',
           key: 'id'

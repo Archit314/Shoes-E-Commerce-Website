@@ -26,7 +26,7 @@ export default (sequelize) => {
 
       // Define association with CategoryBrand
       Brand.belongsToMany(models.Category, {
-        through: 'CategoryBrand',
+        through: models.CategoryBrand,
         foreignKey: 'brand_id',
         otherKey: 'category_id',
         as: 'categories',
