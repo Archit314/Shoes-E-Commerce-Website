@@ -23,6 +23,14 @@ export default (sequelize) => {
         },
         as: 'media'
       });
+
+      // Define association with CategoryBrand
+      Brand.belongsToMany(models.Category, {
+        through: 'CategoryBrand',
+        foreignKey: 'brand_id',
+        otherKey: 'category_id',
+        as: 'categories',
+      })
     }
   }
   Brand.init({
