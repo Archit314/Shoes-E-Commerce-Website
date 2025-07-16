@@ -1,21 +1,48 @@
 const db = await import('../../../models/index.js')
-const {Category} = db.default
+const {Category, Brand, sequelize} = db.default
 
 export default class CategoryAdminService {
 
-    async createCategory(name) {
+    async createCategory(name, brandIds = []) {
 
-        const newCategory = new Category({
-            name: name
-        })
+        const transaction = await sequelize.transaction()
 
-        await newCategory.save()
+        try {
 
-        if(!newCategory){
-            return {status: 422, message: 'Category creation failed'};
+            const newCategory = await Category.create({
+                name: name
+            }, { transaction })
+
+            if(brandIds && brandIds.length > 0){
+                const brands = await Brand.findAll({
+                    where: {
+                        id: brandIds
+                    },
+                    transaction
+                })
+
+                if(brands.length !== brandIds.length){
+                    const foundIds = brands.map((brand) => brand.id)
+                    const missingIds = brandIds.filter((id) => !foundIds.includes(id))
+
+                    await transaction.rollback()
+                    return {status: 422, message: `Invalid brand IDs: ${missingIds.join(', ')}`}
+                }
+
+                await newCategory.addBrands(brands, { transaction })
+            }
+
+            await transaction.commit()
+
+            return {status: 200, message: `Category created successfully`, data: newCategory}
+            
+        } catch (error) {
+            console.error('Error in CategoryAdminService: createCategory', error);
+            await transaction.rollback();
+            
+            console.error('Rollback transaction due to error:', error);
+            return {status: 500, message: 'Internal Server Error'};
         }
-
-        return {status: 200, message: 'Category created successfully', date: newCategory};
     }
 
     async updateCategory(id, name) {

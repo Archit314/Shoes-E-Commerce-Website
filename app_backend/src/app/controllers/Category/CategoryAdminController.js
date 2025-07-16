@@ -3,14 +3,18 @@ import CategoryAdminService from "../../services/Category/CategoryAdminService.j
 export const createCategory = async (req, res) => {
 
     try {
-        const {name} = req.body
+        const {name, brandIds} = req.body
 
         if(!name){
             return res.status(422).json({status: 422, message: 'Category name is required'});
         }
 
+        if(!Array.isArray(brandIds) || brandIds.length === 0){
+            return res.status(422).json({status: 422, message: 'At least one brand ID is required'});
+        }
+
         const categoryAdminService = new CategoryAdminService()
-        const createCategory = await categoryAdminService.createCategory(name)
+        const createCategory = await categoryAdminService.createCategory(name, brandIds)
         if(createCategory.status != 200){
             return res.status(createCategory.status).json({status: createCategory.status, message: createCategory.message});
         }
