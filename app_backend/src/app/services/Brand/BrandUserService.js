@@ -11,6 +11,10 @@ export default class BrandUserService {
                     {
                         association: 'media',
                         attributes: ['id', 'url', 'tag', 'meta'] // pick only necessary fields
+                    },
+                    {
+                        association: 'categories',
+                        attributes: ['id', 'name', 'is_active'] // pick only necessary fields
                     }
                 ]
             });
