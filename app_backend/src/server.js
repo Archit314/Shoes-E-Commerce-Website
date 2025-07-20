@@ -12,6 +12,7 @@ import mediaAdminRoutes from './start/routes/Media/mediaAdminRoutes.js';
 import brandAdminRoutes from './start/routes/Brands/brandAdminRoutes.js';
 import brandUserRoutes from './start/routes/Brands/brandUserRoutes.js';
 import productAdminRoutes from './start/routes/Products/productAdminRoutes.js';
+import productUserRoutes from './start/routes/Products/productUserRoutes.js';
 
 app.use(express.json())
 app.use(cookieParser())
@@ -28,6 +29,7 @@ app.use('/v1/api/admin/media', mediaAdminRoutes)
 app.use('/v1/api/admin/brand', brandAdminRoutes)
 app.use('/v1/api/user/brand', brandUserRoutes)
 app.use('/v1/api/admin/product', productAdminRoutes)
+app.use('/v1/api/user/product', productUserRoutes)
 
 app.listen(3000, () => {
   console.log('Server is running on http://localhost:3000');
