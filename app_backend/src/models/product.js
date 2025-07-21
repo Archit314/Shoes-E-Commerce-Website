@@ -36,10 +36,10 @@ export default (sequelize) => {
       })
 
       // Define association with product variants:
-      // Product.hasMany(models.ProductVariant, {
-      //   foreignKey: 'product_id',
-      //   as: 'variants'
-      // });
+      Product.hasMany(models.ProductVariant, {
+        foreignKey: 'product_id',
+        as: 'productVariants'
+      });
     }
   }
   Product.init({
