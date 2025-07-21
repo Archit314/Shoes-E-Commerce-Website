@@ -5,7 +5,14 @@ export default class ProductUserService {
 
     async getAllProducts(){
 
-        const products = await Product.findAll()
+        const products = await Product.findAll({
+            include: [
+                {
+                    association: 'media',
+                    attributes: ['id', 'url', 'tag', 'meta'] // pick only necessary fields
+                }
+            ]
+        })
 
         if(products.length == 0){
             return {status: 422, message: `Product not found`}

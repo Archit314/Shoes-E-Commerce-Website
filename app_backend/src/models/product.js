@@ -26,6 +26,15 @@ export default (sequelize) => {
         as: 'brand'
       });
 
+      Product.hasMany(models.Media, {
+        foreignKey: 'owner_id',
+        constraints: false,
+        scope: {
+          owner_type: 'PRODUCT'
+        },
+        as: 'media'
+      })
+
       // Define association with product variants:
       // Product.hasMany(models.ProductVariant, {
       //   foreignKey: 'product_id',
