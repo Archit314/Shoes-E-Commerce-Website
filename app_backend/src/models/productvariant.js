@@ -47,7 +47,7 @@ export default (sequelize) => {
     sequelize,
     modelName: 'ProductVariant',
     tableName: 'product_variants',
-    timestamps: false
+    timestamps: true
   });
   return ProductVariant;
 };
