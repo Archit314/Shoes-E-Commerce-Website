@@ -44,6 +44,6 @@ export default {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('ProductVariants');
+    await queryInterface.dropTable('product_variants');
   }
 };
