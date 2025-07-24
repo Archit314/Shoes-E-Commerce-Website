@@ -15,6 +15,7 @@ import productAdminRoutes from './start/routes/Products/productAdminRoutes.js';
 import productUserRoutes from './start/routes/Products/productUserRoutes.js';
 import productVariantAdminRoutes from './start/routes/Products/ProductVariant/productVariantAdminRoutes.js';
 import productVariantUserRoutes from './start/routes/Products/ProductVariant/productVariantUserRoutes.js';
+import cartUserRoutes from './start/routes/Cart/cartUserRoutes.js';
 
 app.use(express.json())
 app.use(cookieParser())
@@ -34,6 +35,7 @@ app.use('/v1/api/admin/product', productAdminRoutes)
 app.use('/v1/api/user/product', productUserRoutes)
 app.use('/v1/api/admin/product-variant', productVariantAdminRoutes)
 app.use('/v1/api/user/product-variant', productVariantUserRoutes)
+app.use('/v1/api/user/cart', cartUserRoutes)
 
 app.listen(3000, () => {
   console.log('Server is running on http://localhost:3000');
