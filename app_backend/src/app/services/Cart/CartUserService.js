@@ -51,4 +51,48 @@ export default class CartUserService {
 
         return {status: 200, message: `Product added successfully`, data: item}
     }
+
+    async removeItem(productVariantId, userId){
+
+        const cart = await Cart.findOne({
+            where: { user_id: userId, is_active: true }
+        });
+
+        if (!cart) {
+            return {status: 422, message: 'Active cart not found.' }
+        }
+
+        const cartItem = await CartItem.findOne({
+            where: {
+                cart_id: cart.id,
+                product_variant_id: productVariantId
+            }
+        });
+
+        if (!cartItem) {
+            return {status: 422, message: 'Item not found in cart.' }
+        }
+
+        await cartItem.destroy();
+
+        const remainingItems = await CartItem.findAll({
+            where: { cart_id: cart.id }
+        });
+
+        if (remainingItems.length === 0) {
+            cart.total_cart_value = 0;
+            await cart.save();
+
+            return {status: 200, message: 'Item removed. Cart is now empty.'}
+        }
+
+        const totalCartValue = remainingItems.reduce((sum, item) => {
+            return sum + parseFloat(item.price);
+        }, 0);
+
+        cart.total_cart_value = totalCartValue.toFixed(2);
+        await cart.save();
+
+        return {status: 200, message: `Item removed successfully`}
+    }
 }
