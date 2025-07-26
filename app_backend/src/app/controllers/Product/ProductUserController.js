@@ -10,7 +10,7 @@ export const productList = async (req, res) => {
         const productUserService = new ProductUserService()
         const getAllProducts = await productUserService.getAllProducts(page, maxRows)
 
-        return res.status(getAllProducts.status).json({status: getAllProducts.status, message: getAllProducts.message, data: getAllProducts.data, pagination: getAllProducts.pagination})
+        return res.status(getAllProducts.status).json({status: getAllProducts.status, message: getAllProducts.message, pagination: getAllProducts.pagination, data: getAllProducts.data})
     } catch (error) {
         console.error('Error in User product Controller: productList', error);
         return res.status(500).json({ status: 500, message: 'Internal Server Error' });
