@@ -13,6 +13,12 @@ export default class CategoryUserService {
                 },
                 {
                     association: 'brands',
+                    include: [
+                        {
+                            association: 'media',
+                            attributes: ['id', 'url', 'tag', 'meta'],
+                        }
+                    ],
                     attributes: ['id', 'name', 'description', 'is_active'] // pick only necessary fields
                 }
             ]
