@@ -3,22 +3,35 @@ const {Product} = db.default
 
 export default class ProductUserService {
 
-    async getAllProducts(){
+    async getAllProducts(page, maxRows){
 
-        const products = await Product.findAll({
+        const offset = (page - 1) * maxRows
+
+        const { count, rows: products } = await Product.findAndCountAll({
             include: [
                 {
                     association: 'media',
                     attributes: ['id', 'url', 'tag', 'meta'] // pick only necessary fields
                 }
-            ]
+            ],
+            limit: maxRows,
+            offset: offset,
+            distinct: true,
+            order: [['createdAt', 'DESC']]
         })
 
         if(products.length == 0){
             return {status: 422, message: `Product not found`}
         }
 
-        return {status: 200, message: `Products fetched successfully`, data: products}
+        const totalPages = Math.ceil(count / maxRows);
+
+        return {status: 200, message: `Products fetched successfully`, data: products, pagination: {
+            totalItems: count,
+            currentPage: page,
+            totalPages,
+            perPage: maxRows
+        }}
     }
 
     async getProductDetail(productId) {

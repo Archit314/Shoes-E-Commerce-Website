@@ -3,11 +3,14 @@ import ProductUserService from "../../services/Product/ProductUserService.js";
 export const productList = async (req, res) => {
 
     try {
+
+        const page = parseInt(req.query.page) || 1
+        const maxRows = parseInt(req.query.maxRows) || 1
         
         const productUserService = new ProductUserService()
-        const getAllProducts = await productUserService.getAllProducts()
+        const getAllProducts = await productUserService.getAllProducts(page, maxRows)
 
-        return res.status(getAllProducts.status).json({status: getAllProducts.status, message: getAllProducts.message, data: getAllProducts.data})
+        return res.status(getAllProducts.status).json({status: getAllProducts.status, message: getAllProducts.message, data: getAllProducts.data, pagination: getAllProducts.pagination})
     } catch (error) {
         console.error('Error in User product Controller: productList', error);
         return res.status(500).json({ status: 500, message: 'Internal Server Error' });
