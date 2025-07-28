@@ -32,6 +32,8 @@ export default class CartUserService {
             // Update quantity and price
             existingItem.quantity += quantity;
             existingItem.price = parseFloat(variant.price) * existingItem.quantity;
+            existingItem.shipping_charge = variant.shipping_charge
+
             await existingItem.save();
             item = existingItem;
         }else {
@@ -41,11 +43,12 @@ export default class CartUserService {
                 product_variant_id: productVariantId,
                 quantity: quantity,
                 price: parseFloat(variant.price) * quantity,
+                shipping_charge: variant.shipping_charge
             });
         }
 
         const allItems = await CartItem.findAll({ where: { cart_id: cart.id } });
-        const totalCartValue = allItems.reduce((sum, item) => sum + parseFloat(item.price), 0);
+        const totalCartValue = allItems.reduce((sum, item) => sum + parseFloat(item.price) + parseFloat(item.shipping_charge), 0);
         cart.total_cart_value = totalCartValue.toFixed(2);
         await cart.save();
 
@@ -87,7 +90,7 @@ export default class CartUserService {
         }
 
         const totalCartValue = remainingItems.reduce((sum, item) => {
-            return sum + parseFloat(item.price);
+            return sum + parseFloat(item.price) + parseFloat(item.shipping_charge);
         }, 0);
 
         cart.total_cart_value = totalCartValue.toFixed(2);

@@ -41,6 +41,11 @@ export default (sequelize) => {
     price: {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false
+    },
+    shipping_charge: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: false,
+      defaultValue: 0.00
     }
   }, {
     sequelize,
