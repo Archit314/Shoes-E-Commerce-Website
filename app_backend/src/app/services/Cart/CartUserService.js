@@ -95,4 +95,46 @@ export default class CartUserService {
 
         return {status: 200, message: `Item removed successfully`}
     }
+
+    async getCartDetails(userId) {
+
+        const cart = await Cart.findOne({
+            where: { user_id: userId, is_active: true },
+        });
+
+        if (!cart) {
+            return { status: 200, message: "Cart is empty", data: { total_cart_value: 0, items: [] } };
+        }
+
+        const cartItems = await CartItem.findAll({
+            where: { cart_id: cart.id },
+            include: [
+                {
+                    association: 'productVariants',
+                    include: [
+                        {
+                            association: 'media',
+                            attributes: ['id', 'url', 'tag', 'meta'],
+                        }
+                    ],
+                    attributes: ['id', 'color', 'size', 'price', 'is_active']
+                },
+            ],
+        });
+
+        const formattedItems = cartItems.map((item) => ({
+            id: item.id,
+            quantity: item.quantity,
+            price: item.price,
+            productVariant: item.productVariants, // from include
+        }));
+
+        return {status: 200, message: "Cart details fetched successfully", 
+            data: {
+                cart_id: cart.id,
+                total_cart_value: parseFloat(cart.total_cart_value),
+                items: formattedItems,
+            },
+        };
+    }
 }

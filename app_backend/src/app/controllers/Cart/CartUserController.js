@@ -44,3 +44,19 @@ export const removeItemFromCart = async (req, res) => {
         return res.status(500).json({status: 500, message: 'Internal server error' });
     }
 };
+
+export const getCartDetails = async (req, res) => {
+
+    try {
+        const userId = req.user.id;
+
+        const cartUserService = new CartUserService();
+        const getCartData = await cartUserService.getCartDetails(userId);
+
+        return res.status(getCartData.status).json({status: getCartData.status, message: getCartData.message, data: getCartData.data});
+
+    } catch (error) {
+        console.error('[CartUserController]: getCartDetails error', error);
+        return res.status(500).json({ status: 500, message: 'Internal server error' });
+    }
+};

@@ -13,6 +13,11 @@ export default (sequelize) => {
      */
     static associate(models) {
       // define association here
+
+      CartItem.belongsTo(models.ProductVariant, {
+        foreignKey: 'product_variant_id',
+        as: 'productVariants'
+      })
     }
   }
   CartItem.init({
