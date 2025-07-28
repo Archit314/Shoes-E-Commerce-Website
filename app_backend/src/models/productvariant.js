@@ -51,7 +51,12 @@ export default (sequelize) => {
       type: DataTypes.UUID,
       allowNull: false
     },
-    is_active: DataTypes.BOOLEAN
+    is_active: DataTypes.BOOLEAN,
+    shipping_charge: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: false,
+      defaultValue: 0.00
+    }
   }, {
     sequelize,
     modelName: 'ProductVariant',

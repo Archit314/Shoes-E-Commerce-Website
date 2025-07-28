@@ -3,7 +3,7 @@ const {ProductVariant, Product} = db.default
 
 export default class ProductVariantAdminService {
 
-    async createVariant(productId, color, size, price){
+    async createVariant(productId, color, size, price, shippingCharge){
 
         const product = await Product.findByPk(productId);
         if (!product) {
@@ -14,7 +14,8 @@ export default class ProductVariantAdminService {
             color: color,
             size: size,
             price: price,
-            product_id: productId
+            product_id: productId,
+            shipping_charge: shippingCharge? shippingCharge: 0.00
         })
 
         if(!newProductVariant){
