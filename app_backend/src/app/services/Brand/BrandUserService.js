@@ -3,7 +3,13 @@ const {Brand} = db.default
 
 export default class BrandUserService {
 
-    async getBrands() {
+    async getBrands(queryParameters) {
+
+        const whereCondition = {}
+
+        if(queryParameters.categoryId){
+            whereCondition.id = queryParameters.categoryId
+        }
 
         try {
             const brands = await Brand.findAll({
@@ -14,6 +20,7 @@ export default class BrandUserService {
                     },
                     {
                         association: 'categories',
+                        where: whereCondition,
                         include: [
                             {
                                 association: 'media',
