@@ -8,7 +8,7 @@ export const productList = async (req, res) => {
         const maxRows = parseInt(req.query.maxRows) || 1
         
         const productUserService = new ProductUserService()
-        const getAllProducts = await productUserService.getAllProducts(page, maxRows)
+        const getAllProducts = await productUserService.getAllProducts(page, maxRows, req.query)
 
         return res.status(getAllProducts.status).json({status: getAllProducts.status, message: getAllProducts.message, pagination: getAllProducts.pagination, data: getAllProducts.data})
     } catch (error) {

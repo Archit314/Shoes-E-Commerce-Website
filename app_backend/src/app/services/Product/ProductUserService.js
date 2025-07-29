@@ -3,15 +3,38 @@ const {Product} = db.default
 
 export default class ProductUserService {
 
-    async getAllProducts(page, maxRows){
+    async getAllProducts(page, maxRows, queryParameters){
+
+        console.log(queryParameters);
+        
 
         const offset = (page - 1) * maxRows
 
+        const whereCondition = {}
+
+        if(queryParameters.categoryId){
+            whereCondition.category_id = queryParameters.categoryId
+        }
+        if(queryParameters.brandId){
+            whereCondition.brand_id = queryParameters.brandId
+        }
+
         const { count, rows: products } = await Product.findAndCountAll({
+            where: whereCondition,
             include: [
                 {
                     association: 'media',
                     attributes: ['id', 'url', 'tag', 'meta'] // pick only necessary fields
+                },
+                {
+                    association: 'productVariants',
+                    include: [
+                        {
+                            association: 'media',
+                            attributes: ['id', 'url', 'tag', 'meta'],
+                        }
+                    ],
+                    attributes: ['id', 'color', 'size', 'price', 'is_active'],
                 }
             ],
             limit: maxRows,
