@@ -3,9 +3,11 @@ import CategoryUserService from "../../services/Category/CategoryUserService.js"
 export const list = async (req, res) => {
 
     try {
+
+        const queryParameters = req.query;
         
         const categoryUserService = new CategoryUserService();
-        const getAllCategories = await categoryUserService.getAllCategories()
+        const getAllCategories = await categoryUserService.getAllCategories(queryParameters)
         if(getAllCategories.status !== 200){
             return res.status(getAllCategories.status).json({status: getAllCategories.status, message: getAllCategories.message})
         }

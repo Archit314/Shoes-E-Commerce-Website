@@ -3,7 +3,13 @@ const {Category} = db.default
 
 export default class CategoryUserService {
 
-    async getAllCategories() {
+    async getAllCategories(queryParameters) {
+
+        const whereCondition = {}
+
+        if(queryParameters.brandId){
+            whereCondition.id = queryParameters.brandId
+        }
 
         const categories = await Category.findAll({
             include: [
@@ -13,6 +19,7 @@ export default class CategoryUserService {
                 },
                 {
                     association: 'brands',
+                    where: whereCondition,
                     include: [
                         {
                             association: 'media',
