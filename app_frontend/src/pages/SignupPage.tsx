@@ -20,7 +20,7 @@ function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 px-6">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white px-6">
       <div className="w-full max-w-md">
         <h2 className="text-5xl font-extrabold text-white text-center mb-10 drop-shadow-lg">
           Create Your Account
@@ -66,7 +66,7 @@ function SignupPage() {
 
           <button
             type="submit"
-            className="mt-3 py-3 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold rounded-xl text-lg shadow-lg transition-all duration-300"
+            className="mt-3 py-3 bg-gradient-to-r from-pink-500 to-yellow-400 hover:scale-105 rounded-full font-bold shadow-lg transition-transform duration-300"
           >
             Sign Up
           </button>
