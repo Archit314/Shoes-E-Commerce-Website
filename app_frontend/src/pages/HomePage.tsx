@@ -35,21 +35,27 @@ function HomePage() {
         <div className="absolute w-[400px] h-[400px] bg-indigo-400/20 rounded-full blur-3xl -bottom-40 right-0 animate-pulse delay-2000"></div>
         
         {/* Hero Section */}
-        <section className="flex flex-col md:flex-row items-center justify-between gap-10">
-          <div className="flex-1 space-y-6">
-            <h1 className="text-4xl md:text-6xl font-extrabold leading-tight drop-shadow-lg">
-              Step Into <span className="bg-gradient-to-r from-pink-400 to-yellow-300 bg-clip-text text-transparent">Your Style</span>
+        <section className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-10 lg:gap-16 w-full">
+          <div className="flex-1 space-y-4 md:space-y-6 text-center md:text-left">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-snug md:leading-tight drop-shadow-lg">
+              Step Into{" "}
+              <span className="bg-gradient-to-r from-pink-400 to-yellow-300 bg-clip-text text-transparent">
+                Your Style
+              </span>
             </h1>
-            <p className="text-white/90 text-lg md:text-xl max-w-lg">
+            <p className="text-white/90 text-base sm:text-lg md:text-xl max-w-lg mx-auto md:mx-0">
               Discover the latest sneakers and exclusive designs. Upgrade your shoe game today!
             </p>
-            <button className="px-8 py-3 bg-gradient-to-r from-pink-500 to-yellow-400 hover:scale-105 rounded-full font-bold shadow-lg transition-transform duration-300">
+            <button className="px-6 sm:px-8 py-3 bg-gradient-to-r from-pink-500 to-yellow-400 hover:scale-105 rounded-full font-bold shadow-lg transition-transform duration-300">
               Shop Now
             </button>
           </div>
+
           <div className="flex-1 flex justify-center md:justify-end">
-            <div className="w-80 md:w-[400px] h-80 md:h-[400px] bg-white/10 rounded-3xl flex items-center justify-center shadow-2xl transform hover:rotate-3 hover:scale-105 transition duration-500">
-              <span className="text-white/50 font-semibold text-lg">Sneaker Image</span>
+            <div className="w-64 sm:w-72 md:w-[350px] lg:w-[400px] h-64 sm:h-72 md:h-[350px] lg:h-[400px] bg-white/10 rounded-3xl flex items-center justify-center shadow-2xl transform hover:rotate-3 hover:scale-105 transition duration-500">
+              <span className="text-white/50 font-semibold text-sm sm:text-base">
+                Sneaker Image
+              </span>
             </div>
           </div>
         </section>
