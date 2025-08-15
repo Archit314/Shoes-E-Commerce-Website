@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ShoppingBag, Menu, X } from "lucide-react";
+import { ShoppingBag, Menu, X, LogInIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 
 function Navbar() {
@@ -18,19 +18,20 @@ function Navbar() {
         <Link className="hover:text-pink-300 transition-colors duration-300 cursor-pointer" to={"/"}>Shop</Link>
         <Link className="hover:text-pink-300 transition-colors duration-300 cursor-pointer" to={"/"}>About</Link>
         <Link className="hover:text-pink-300 transition-colors duration-300 cursor-pointer" to={"/"}>Contact</Link>
+        <Link className="hover:text-pink-300 transition-colors duration-300 cursor-pointer" to={"/"}><ShoppingBag/></Link>
       </ul>
 
-      {/* Cart Button - Desktop */}
+      {/* Auth Button - Desktop */}
       <div className="hidden md:block">
         <button className="flex items-center gap-2 bg-white text-pink-600 hover:bg-pink-600 hover:text-white px-6 py-2 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 font-semibold">
-          <ShoppingBag />
+          <LogInIcon />
         </button>
       </div>
 
       {/* Mobile Menu Button */}
       <div className="md:hidden flex items-center gap-4">
         <button className="bg-white text-pink-600 hover:bg-pink-600 hover:text-white p-2 rounded-full shadow-lg transition-all duration-300">
-          <ShoppingBag size={20} />
+          <LogInIcon size={20} />
         </button>
         <button
           className="text-white hover:text-pink-300 transition-colors"
@@ -47,6 +48,7 @@ function Navbar() {
           <Link className="list-none hover:text-pink-300 cursor-pointer" to={"/"}>Shop</Link>
           <Link className="list-none hover:text-pink-300 cursor-pointer" to={"/"}>About</Link>
           <Link className="list-none hover:text-pink-300 cursor-pointer" to={"/"}>Contact</Link>
+          <Link className="list-none hover:text-pink-300 cursor-pointer" to={"/"}><ShoppingBag/></Link>
         </div>
       )}
     </nav>
