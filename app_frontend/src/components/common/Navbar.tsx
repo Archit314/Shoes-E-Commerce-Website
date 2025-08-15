@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ShoppingBag, Menu, X } from "lucide-react";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,10 +14,10 @@ function Navbar() {
 
       {/* Desktop Links */}
       <ul className="hidden md:flex space-x-8 text-white font-medium">
-        <li className="hover:text-pink-300 transition-colors duration-300 cursor-pointer">Home</li>
-        <li className="hover:text-pink-300 transition-colors duration-300 cursor-pointer">Shop</li>
-        <li className="hover:text-pink-300 transition-colors duration-300 cursor-pointer">About</li>
-        <li className="hover:text-pink-300 transition-colors duration-300 cursor-pointer">Contact</li>
+        <Link className="hover:text-pink-300 transition-colors duration-300 cursor-pointer" to={"/"}>Home</Link>
+        <Link className="hover:text-pink-300 transition-colors duration-300 cursor-pointer" to={"/"}>Shop</Link>
+        <Link className="hover:text-pink-300 transition-colors duration-300 cursor-pointer" to={"/"}>About</Link>
+        <Link className="hover:text-pink-300 transition-colors duration-300 cursor-pointer" to={"/"}>Contact</Link>
       </ul>
 
       {/* Cart Button - Desktop */}
@@ -42,10 +43,10 @@ function Navbar() {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="absolute top-full left-0 w-full bg-black/80 backdrop-blur-lg md:hidden flex flex-col items-center space-y-6 py-6 text-white font-medium animate-fadeIn">
-          <li className="list-none hover:text-pink-300 cursor-pointer">Home</li>
-          <li className="list-none hover:text-pink-300 cursor-pointer">Shop</li>
-          <li className="list-none hover:text-pink-300 cursor-pointer">About</li>
-          <li className="list-none hover:text-pink-300 cursor-pointer">Contact</li>
+          <Link className="list-none hover:text-pink-300 cursor-pointer" to={"/"}>Home</Link>
+          <Link className="list-none hover:text-pink-300 cursor-pointer" to={"/"}>Shop</Link>
+          <Link className="list-none hover:text-pink-300 cursor-pointer" to={"/"}>About</Link>
+          <Link className="list-none hover:text-pink-300 cursor-pointer" to={"/"}>Contact</Link>
         </div>
       )}
     </nav>
