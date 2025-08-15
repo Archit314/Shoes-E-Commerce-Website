@@ -52,10 +52,12 @@ function HomePage() {
           </div>
 
           <div className="flex-1 flex justify-center md:justify-end">
-            <div className="w-64 sm:w-72 md:w-[350px] lg:w-[400px] h-64 sm:h-72 md:h-[350px] lg:h-[400px] bg-white/10 rounded-3xl flex items-center justify-center shadow-2xl transform hover:rotate-3 hover:scale-105 transition duration-500">
-              <span className="text-white/50 font-semibold text-sm sm:text-base">
-                Sneaker Image
-              </span>
+            <div className="w-64 sm:w-72 md:w-[350px] lg:w-[400px] h-64 sm:h-72 md:h-[350px] lg:h-[400px] bg-white/10 rounded-3xl overflow-hidden shadow-2xl transform hover:rotate-3 hover:scale-105 transition duration-500">
+              <img
+                src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt="Sneaker"
+                className="w-full h-full object-cover"
+              />
             </div>
           </div>
         </section>
@@ -139,40 +141,62 @@ function HomePage() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-black/40 backdrop-blur-lg mt-12 py-10 px-6 md:px-20 border-t border-white/20">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <footer className="bg-gradient-to-r from-black/60 via-black/80 to-black/60 backdrop-blur-lg mt-12 py-12 px-6 md:px-20 border-t border-white/20">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
           
           {/* Logo & Description */}
           <div>
-            <h2 className="text-2xl font-bold">Kick<span className="text-pink-400">Z</span></h2>
-            <p className="text-white/70 mt-3">Your ultimate destination for premium sneakers. Step up your style with us.</p>
+            <h2 className="text-3xl font-extrabold tracking-wide">
+              Kick<span className="text-pink-400">Z</span>
+            </h2>
+            <p className="text-white/70 mt-4 leading-relaxed max-w-sm">
+              Your ultimate destination for premium sneakers.  
+              Step up your style game with our exclusive collections.
+            </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-3">Quick Links</h3>
-            <ul className="space-y-2 text-white/70">
-              <li className="hover:text-white cursor-pointer">Home</li>
-              <li className="hover:text-white cursor-pointer">Shop</li>
-              <li className="hover:text-white cursor-pointer">About</li>
-              <li className="hover:text-white cursor-pointer">Contact</li>
+            <h3 className="text-lg font-semibold mb-4 border-b border-pink-400/40 pb-2 inline-block">
+              Quick Links
+            </h3>
+            <ul className="space-y-3 text-white/70">
+              {["Home", "Shop", "About", "Contact"].map((link, i) => (
+                <li
+                  key={i}
+                  className="hover:text-pink-400 transition-colors duration-200 cursor-pointer"
+                >
+                  {link}
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* Social Media */}
           <div>
-            <h3 className="text-lg font-semibold mb-3">Follow Us</h3>
+            <h3 className="text-lg font-semibold mb-4 border-b border-pink-400/40 pb-2 inline-block">
+              Follow Us
+            </h3>
             <div className="flex gap-4">
-              {/* {[FaFacebookF, FaInstagram, FaTwitter, FaGithub].map((Icon, index) => (
-                <div key={index} className="w-10 h-10 flex items-center justify-center bg-white/10 rounded-full hover:bg-pink-500 transition-colors cursor-pointer">
-                  <Icon />
+              {["F", "I", "T", "G"].map((icon, i) => (
+                <div
+                  key={i}
+                  className="w-10 h-10 flex items-center justify-center bg-white/10 rounded-full hover:bg-pink-500 hover:scale-110 transition-all cursor-pointer font-bold text-white"
+                >
+                  {icon}
                 </div>
-              ))} */}
+              ))}
             </div>
           </div>
 
         </div>
-        <p className="text-center text-white/50 mt-8 text-sm">© {new Date().getFullYear()} ShoeMart. All rights reserved.</p>
+
+        {/* Divider */}
+        <div className="mt-10 border-t border-white/10 pt-6 text-center">
+          <p className="text-white/50 text-sm">
+            © {new Date().getFullYear()} KickZ. All rights reserved.
+          </p>
+        </div>
       </footer>
 
     </div>
