@@ -25,7 +25,7 @@ const brands = [
 
 function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-600 to-pink-500 text-white flex flex-col justify-between relative overflow-hidden">
+    <div className="min-h-screen text-white flex flex-col justify-between relative overflow-hidden">
       
       {/* Main Content */}
       <main className="px-6 md:px-20 py-12 flex flex-col gap-24 relative z-10">
