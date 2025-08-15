@@ -1,103 +1,174 @@
-// src/pages/HomePage.tsx
-import React from "react";
-import { Link } from "react-router-dom";
+// import React from "react";
+// import { FaFacebookF, FaInstagram, FaTwitter, FaGithub } from "react-icons/fa";
+
+const categories = [
+  { id: 1, name: "Sneakers", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { id: 2, name: "Running", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { id: 3, name: "Casual", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { id: 4, name: "Basketball", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+];
 
 const featuredProducts = [
-  { id: 1, name: "Air Max 270", price: "$120", img: "https://via.placeholder.com/300x300?text=Air+Max" },
-  { id: 2, name: "Jordan Retro 1", price: "$150", img: "https://via.placeholder.com/300x300?text=Jordan+1" },
-  { id: 3, name: "Yeezy Boost 350", price: "$200", img: "https://via.placeholder.com/300x300?text=Yeezy+350" },
-  { id: 4, name: "Nike Dunk Low", price: "$130", img: "https://via.placeholder.com/300x300?text=Nike+Dunk" },
+  { id: 1, name: "Air Max 270", price: "$120", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { id: 2, name: "Jordan Retro", price: "$150", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { id: 3, name: "Yeezy Boost", price: "$200", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { id: 4, name: "Classic Converse", price: "$90", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
 ];
 
 const brands = [
-  { id: 1, name: "Nike", img: "https://via.placeholder.com/150x100?text=Nike" },
-  { id: 2, name: "Adidas", img: "https://via.placeholder.com/150x100?text=Adidas" },
-  { id: 3, name: "Puma", img: "https://via.placeholder.com/150x100?text=Puma" },
-  { id: 4, name: "Jordan", img: "https://via.placeholder.com/150x100?text=Jordan" },
-  { id: 5, name: "Reebok", img: "https://via.placeholder.com/150x100?text=Reebok" },
+  { id: 1, name: "Nike", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { id: 2, name: "Adidas", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { id: 3, name: "Puma", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { id: 4, name: "Converse", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+  { id: 5, name: "Reebok", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
 ];
 
 function HomePage() {
   return (
-    <div className="text-gray-900 bg-gray-50">
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-[80vh] flex flex-col justify-center items-center text-center text-white px-6">
-        <h1 className="text-5xl md:text-6xl font-extrabold mb-4">Kickz</h1>
-        <p className="text-lg md:text-2xl mb-8 max-w-2xl">
-          Step up your style. Find the latest sneakers and limited editions right here.
-        </p>
-        <Link
-          to="/shop"
-          className="px-6 py-3 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-semibold rounded-lg transition-all duration-300"
-        >
-          Shop Now
-        </Link>
-      </section>
+    <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-600 to-pink-500 text-white flex flex-col justify-between relative overflow-hidden">
+      
+      {/* Main Content */}
+      <main className="px-6 md:px-20 py-12 flex flex-col gap-24 relative z-10">
 
-      {/* Featured Products */}
-      <section className="py-20 max-w-7xl mx-auto px-6">
-        <h2 className="text-3xl font-bold mb-8 text-center">Featured Products</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-          {featuredProducts.map((product) => (
-            <div
-              key={product.id}
-              className="bg-white rounded-xl shadow-lg overflow-hidden hover:scale-105 transform transition-all duration-300"
-            >
-              <img src={product.img} alt={product.name} className="w-full h-64 object-cover" />
-              <div className="p-4 text-center">
-                <h3 className="font-semibold text-lg mb-1">{product.name}</h3>
-                <p className="text-yellow-500 font-bold">{product.price}</p>
-                <button className="mt-3 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-all duration-300">
-                  Add to Cart
+        {/* Floating Background Circles */}
+        <div className="absolute w-[500px] h-[500px] bg-pink-400/20 rounded-full blur-3xl -top-40 -left-20 animate-pulse"></div>
+        <div className="absolute w-[400px] h-[400px] bg-indigo-400/20 rounded-full blur-3xl -bottom-40 right-0 animate-pulse delay-2000"></div>
+        
+        {/* Hero Section */}
+        <section className="flex flex-col md:flex-row items-center justify-between gap-10">
+          <div className="flex-1 space-y-6">
+            <h1 className="text-4xl md:text-6xl font-extrabold leading-tight drop-shadow-lg">
+              Step Into <span className="bg-gradient-to-r from-pink-400 to-yellow-300 bg-clip-text text-transparent">Your Style</span>
+            </h1>
+            <p className="text-white/90 text-lg md:text-xl max-w-lg">
+              Discover the latest sneakers and exclusive designs. Upgrade your shoe game today!
+            </p>
+            <button className="px-8 py-3 bg-gradient-to-r from-pink-500 to-yellow-400 hover:scale-105 rounded-full font-bold shadow-lg transition-transform duration-300">
+              Shop Now
+            </button>
+          </div>
+          <div className="flex-1 flex justify-center md:justify-end">
+            <div className="w-80 md:w-[400px] h-80 md:h-[400px] bg-white/10 rounded-3xl flex items-center justify-center shadow-2xl transform hover:rotate-3 hover:scale-105 transition duration-500">
+              <span className="text-white/50 font-semibold text-lg">Sneaker Image</span>
+            </div>
+          </div>
+        </section>
+
+        {/* Categories Section */}
+        <section>
+          <div className="flex items-center justify-between mb-8">
+            <h2 className="text-3xl font-bold">Categories</h2>
+            <button className="flex items-center gap-2 text-white/80 hover:text-white bg-white/10 backdrop-blur-lg px-4 py-2 rounded-full transition">
+              View More
+              <span className="text-lg">→</span>
+            </button>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
+            {categories.map((cat) => (
+              <div
+                key={cat.id}
+                className="bg-white/10 backdrop-blur-lg rounded-xl p-4 flex flex-col items-center hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] transition-transform duration-300 cursor-pointer"
+              >
+                <div className="w-20 h-20 mb-2 rounded-lg overflow-hidden bg-white/20 flex items-center justify-center">
+                  <img src={cat.img} alt={cat.name} className="w-full h-full object-cover" />
+                </div>
+                <p className="font-semibold">{cat.name}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Featured Products Section */}
+        <section>
+          <h2 className="text-3xl font-bold mb-8">Featured Products</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+            {featuredProducts.map((product) => (
+              <div
+                key={product.id}
+                className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 flex flex-col items-center hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] transition-transform duration-300"
+              >
+                <div className="w-36 h-36 mb-4 rounded-xl overflow-hidden shadow-lg">
+                  <img
+                    src={product.img}
+                    alt={product.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
+                <p className="text-pink-300 font-bold mb-4">{product.price}</p>
+                <button className="px-8 py-3 bg-gradient-to-r from-pink-500 to-yellow-400 hover:scale-105 rounded-full font-bold shadow-lg transition-transform duration-300">
+                  Buy Now
                 </button>
               </div>
-            </div>
-          ))}
-        </div>
-      </section>
+            ))}
+          </div>
+        </section>
 
-      {/* Categories Section */}
-      <section className="py-20 bg-gray-100">
-        <h2 className="text-3xl font-bold mb-8 text-center">Shop by Category</h2>
-        <div className="max-w-6xl mx-auto grid sm:grid-cols-2 md:grid-cols-4 gap-6 px-6">
-          <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:scale-105 transform transition-all duration-300 cursor-pointer">
-            <img src="https://via.placeholder.com/200x200?text=Running" alt="Running" className="mx-auto mb-4 rounded-lg"/>
-            <h3 className="font-semibold">Running Shoes</h3>
+        {/* Brands Section */}
+        <section className="mt-12">
+          <div className="flex items-center justify-between mb-8">
+            <h2 className="text-3xl font-bold">Brands</h2>
+            <button className="flex items-center gap-2 text-white/80 hover:text-white bg-white/10 backdrop-blur-lg px-4 py-2 rounded-full transition">
+              View More
+              <span className="text-lg">→</span>
+            </button>
           </div>
-          <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:scale-105 transform transition-all duration-300 cursor-pointer">
-            <img src="https://via.placeholder.com/200x200?text=Basketball" alt="Basketball" className="mx-auto mb-4 rounded-lg"/>
-            <h3 className="font-semibold">Basketball Shoes</h3>
-          </div>
-          <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:scale-105 transform transition-all duration-300 cursor-pointer">
-            <img src="https://via.placeholder.com/200x200?text=Casual" alt="Casual" className="mx-auto mb-4 rounded-lg"/>
-            <h3 className="font-semibold">Casual Sneakers</h3>
-          </div>
-          <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:scale-105 transform transition-all duration-300 cursor-pointer">
-            <img src="https://via.placeholder.com/200x200?text=High+Top" alt="High Tops" className="mx-auto mb-4 rounded-lg"/>
-            <h3 className="font-semibold">High Tops</h3>
-          </div>
-        </div>
-      </section>
 
-      {/* Shop by Brands Section */}
-      <section className="py-20 max-w-7xl mx-auto px-6">
-        <h2 className="text-3xl font-bold mb-8 text-center">Shop by Brands</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
-          {brands.map((brand) => (
-            <div
-              key={brand.id}
-              className="bg-white rounded-xl shadow-lg p-4 flex items-center justify-center hover:scale-105 transform transition-all duration-300 cursor-pointer"
-            >
-              <img src={brand.img} alt={brand.name} className="h-16 object-contain" />
-            </div>
-          ))}
-        </div>
-      </section>
+          <div className="flex flex-wrap justify-center gap-6">
+            {brands.map((brand) => (
+              <div
+                key={brand.id}
+                className="w-28 h-28 flex items-center justify-center bg-white/10 backdrop-blur-lg rounded-full p-4 hover:scale-110 hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] transition-transform duration-300 cursor-pointer"
+              >
+                <img
+                  src={brand.img}
+                  alt={brand.name}
+                  className="w-full h-full rounded-full object-cover"
+                />
+              </div>
+            ))}
+          </div>
+        </section>
+      </main>
 
       {/* Footer */}
-      <footer className="bg-gray-900 py-10 text-center text-white">
-        <p>&copy; {new Date().getFullYear()} Kickz. All rights reserved.</p>
+      <footer className="bg-black/40 backdrop-blur-lg mt-12 py-10 px-6 md:px-20 border-t border-white/20">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          
+          {/* Logo & Description */}
+          <div>
+            <h2 className="text-2xl font-bold">Kick<span className="text-pink-400">Z</span></h2>
+            <p className="text-white/70 mt-3">Your ultimate destination for premium sneakers. Step up your style with us.</p>
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h3 className="text-lg font-semibold mb-3">Quick Links</h3>
+            <ul className="space-y-2 text-white/70">
+              <li className="hover:text-white cursor-pointer">Home</li>
+              <li className="hover:text-white cursor-pointer">Shop</li>
+              <li className="hover:text-white cursor-pointer">About</li>
+              <li className="hover:text-white cursor-pointer">Contact</li>
+            </ul>
+          </div>
+
+          {/* Social Media */}
+          <div>
+            <h3 className="text-lg font-semibold mb-3">Follow Us</h3>
+            <div className="flex gap-4">
+              {/* {[FaFacebookF, FaInstagram, FaTwitter, FaGithub].map((Icon, index) => (
+                <div key={index} className="w-10 h-10 flex items-center justify-center bg-white/10 rounded-full hover:bg-pink-500 transition-colors cursor-pointer">
+                  <Icon />
+                </div>
+              ))} */}
+            </div>
+          </div>
+
+        </div>
+        <p className="text-center text-white/50 mt-8 text-sm">© {new Date().getFullYear()} ShoeMart. All rights reserved.</p>
       </footer>
+
     </div>
   );
 }
