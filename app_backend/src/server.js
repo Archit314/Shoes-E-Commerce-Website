@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import cookieParser from 'cookie-parser';
 import express from 'express';
+import cors from "cors"
 const app = express();
 
 import { connectDb } from './app/provider/aiven database/databaseConnection.js';
@@ -20,6 +21,10 @@ import orderUserRoutes from './start/routes/Order/orderUserRoutes.js';
 
 app.use(express.json())
 app.use(cookieParser())
+app.use(cors({
+  origin: process.env.FRONTEND_ORIGIN,
+  credentials: true
+}))
 
 app.get('/ping', (req, res) => {
   console.log('[Server]: Ping route hit');
