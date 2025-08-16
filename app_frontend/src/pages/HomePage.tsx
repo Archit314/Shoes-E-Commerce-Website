@@ -1,12 +1,10 @@
 // import React from "react";
 // import { FaFacebookF, FaInstagram, FaTwitter, FaGithub } from "react-icons/fa";
 
-const categories = [
-  { id: 1, name: "Sneakers", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
-  { id: 2, name: "Running", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
-  { id: 3, name: "Casual", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
-  { id: 4, name: "Basketball", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
-];
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast"
+
+import { useCategoryStore } from "../store/Category/useCategoryStore";
 
 const featuredProducts = [
   { id: 1, name: "Air Max 270", price: "$120", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
@@ -24,6 +22,29 @@ const brands = [
 ];
 
 function HomePage() {
+
+  const {getCategories} = useCategoryStore()
+  const [categories, setCategories] = useState([])
+  
+  useEffect(() => {
+
+    const fetchCategories = async () => {
+      const gotResponse = await getCategories()
+      console.log(gotResponse);
+      
+      if(gotResponse.status !== 200){
+        toast.error(gotResponse.message)
+      }
+      else{
+        toast.success(gotResponse.message)
+        setCategories(gotResponse.data)
+      }
+    }
+
+    fetchCategories()
+
+  }, [])
+
   return (
     <div className="min-h-screen text-white flex flex-col justify-between relative overflow-hidden">
       
@@ -73,13 +94,13 @@ function HomePage() {
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
-            {categories.map((cat) => (
+            {categories.map((cat: {id: string, media: {url: string}[], name: string}) => (
               <div
                 key={cat.id}
                 className="bg-white/10 backdrop-blur-lg rounded-xl p-4 flex flex-col items-center hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] transition-transform duration-300 cursor-pointer"
               >
                 <div className="w-20 h-20 mb-2 rounded-lg overflow-hidden bg-white/20 flex items-center justify-center">
-                  <img src={cat.img} alt={cat.name} className="w-full h-full object-cover" />
+                  <img src={cat.media[0].url} alt={cat.name} className="w-full h-full object-cover" />
                 </div>
                 <p className="font-semibold">{cat.name}</p>
               </div>
