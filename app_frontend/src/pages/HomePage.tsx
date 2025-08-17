@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast"
+import { Link } from "react-router-dom";
 
 import { useCategoryStore } from "../store/Category/useCategoryStore";
 
@@ -89,7 +90,7 @@ function HomePage() {
             <h2 className="text-3xl font-bold">Categories</h2>
             <button className="flex items-center gap-2 text-white/80 hover:text-white bg-white/10 backdrop-blur-lg px-4 py-2 rounded-full transition">
               View More
-              <span className="text-lg">→</span>
+              <Link to={'/categories'} className="text-lg">→</Link>
             </button>
           </div>
 

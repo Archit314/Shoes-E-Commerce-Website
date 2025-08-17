@@ -8,6 +8,7 @@ import HomePage from "./pages/HomePage"
 import SignupPage from "./pages/SignupPage"
 import SigninPage from "./pages/SigninPage"
 import Navbar from "./components/common/Navbar"
+import CategoryListPage from "./pages/Category/CategoryListPage"
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
         <Route path="/" element={<HomePage />}/>
         <Route path="/sign-up" element={<SignupPage />}/>
         <Route path="/sign-in" element={<SigninPage />}/>
+        <Route path="/categories" element={<CategoryListPage />}/>
       </Routes>
     </div>
   )
