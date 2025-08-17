@@ -28,6 +28,9 @@ function HomePage() {
   const [categories, setCategories] = useState([])
   
   useEffect(() => {
+console.log('url');
+console.log(import.meta.env.VITE_API_BASE_URL);
+
 
     const fetchCategories = async () => {
       const gotResponse = await getCategories()
