@@ -9,6 +9,8 @@ import SignupPage from "./pages/SignupPage"
 import SigninPage from "./pages/SigninPage"
 import Navbar from "./components/common/Navbar"
 import CategoryListPage from "./pages/Category/CategoryListPage"
+import AboutPage from "./pages/AboutPage"
+import Footer from "./components/common/Footer"
 
 function App() {
 
@@ -19,8 +21,10 @@ function App() {
         <Route path="/" element={<HomePage />}/>
         <Route path="/sign-up" element={<SignupPage />}/>
         <Route path="/sign-in" element={<SigninPage />}/>
+        <Route path="/about" element={<AboutPage />}/>
         <Route path="/categories" element={<CategoryListPage />}/>
       </Routes>
+      <Footer/>
     </div>
   )
 }

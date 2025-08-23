@@ -16,7 +16,7 @@ function Navbar() {
       <ul className="hidden md:flex space-x-8 text-white font-medium">
         <Link className="hover:text-pink-300 transition-colors duration-300 cursor-pointer" to={"/"}>Home</Link>
         <Link className="hover:text-pink-300 transition-colors duration-300 cursor-pointer" to={"/"}>Shop</Link>
-        <Link className="hover:text-pink-300 transition-colors duration-300 cursor-pointer" to={"/"}>About</Link>
+        <Link className="hover:text-pink-300 transition-colors duration-300 cursor-pointer" to={"/about"}>About</Link>
         <Link className="hover:text-pink-300 transition-colors duration-300 cursor-pointer" to={"/"}>Contact</Link>
         <Link className="hover:text-pink-300 transition-colors duration-300 cursor-pointer" to={"/"}><ShoppingBag/></Link>
       </ul>
@@ -46,7 +46,7 @@ function Navbar() {
         <div className="absolute top-full left-0 w-full bg-black/80 backdrop-blur-lg md:hidden flex flex-col items-center space-y-6 py-6 text-white font-medium animate-fadeIn">
           <Link className="list-none hover:text-pink-300 cursor-pointer" to={"/"}>Home</Link>
           <Link className="list-none hover:text-pink-300 cursor-pointer" to={"/"}>Shop</Link>
-          <Link className="list-none hover:text-pink-300 cursor-pointer" to={"/"}>About</Link>
+          <Link className="list-none hover:text-pink-300 cursor-pointer" to={"/about"}>About</Link>
           <Link className="list-none hover:text-pink-300 cursor-pointer" to={"/"}>Contact</Link>
           <Link className="list-none hover:text-pink-300 cursor-pointer" to={"/"}><ShoppingBag/></Link>
         </div>
