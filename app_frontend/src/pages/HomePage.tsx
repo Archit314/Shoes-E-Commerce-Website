@@ -7,20 +7,23 @@ import { Link } from "react-router-dom";
 
 import { useCategoryStore } from "../store/Category/useCategoryStore";
 import { useBrandStore } from "../store/Brand/useBrandStore";
+import { useProductStore } from "../store/Product/useProductStore";
 
-const featuredProducts = [
-  { id: 1, name: "Air Max 270", price: "$120", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
-  { id: 2, name: "Jordan Retro", price: "$150", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
-  { id: 3, name: "Yeezy Boost", price: "$200", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
-  { id: 4, name: "Classic Converse", price: "$90", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
-];
+// const featuredProducts = [
+//   { id: 1, name: "Air Max 270", price: "$120", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+//   { id: 2, name: "Jordan Retro", price: "$150", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+//   { id: 3, name: "Yeezy Boost", price: "$200", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+//   { id: 4, name: "Classic Converse", price: "$90", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+// ];
 
 function HomePage() {
 
   const {getCategories} = useCategoryStore()
   const {getBrands} = useBrandStore()
+  const {getProducts} = useProductStore()
   const [categories, setCategories] = useState([])
   const [brands, setBrands] = useState([])
+  const [featuredProducts, setFeaturedProducts] = useState([])
   
   useEffect(() => {
 console.log('url');
@@ -52,8 +55,21 @@ console.log(import.meta.env.VITE_API_BASE_URL);
       }
     }
 
+    const fetchFeaturedProducts = async () => {
+      const gotResponse = await getProducts()
+
+      if(gotResponse.status !== 200){
+        toast.error(gotResponse.message)
+      }
+      else{
+        toast.success(gotResponse.message)
+        setFeaturedProducts(gotResponse.data)
+      }
+    }
+
     fetchCategories()
     fetchBrands()
+    fetchFeaturedProducts()
 
   }, [])
 
@@ -124,20 +140,20 @@ console.log(import.meta.env.VITE_API_BASE_URL);
         <section>
           <h2 className="text-3xl font-bold mb-8">Featured Products</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-            {featuredProducts.map((product) => (
+            {featuredProducts.map((product: {id: string, productVariants: {price: string, media: {url: string}[]}[], name: string}) => (
               <div
                 key={product.id}
                 className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 flex flex-col items-center hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] transition-transform duration-300"
               >
                 <div className="w-36 h-36 mb-4 rounded-xl overflow-hidden shadow-lg">
                   <img
-                    src={product.img}
+                    src={product.productVariants[0].media[0].url}
                     alt={product.name}
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
-                <p className="text-pink-300 font-bold mb-4">{product.price}</p>
+                <p className="text-pink-300 font-bold mb-4">{product.productVariants[0].price}</p>
                 <button className="px-8 py-3 bg-gradient-to-r from-pink-500 to-yellow-400 hover:scale-105 rounded-full font-bold shadow-lg transition-transform duration-300">
                   Buy Now
                 </button>
