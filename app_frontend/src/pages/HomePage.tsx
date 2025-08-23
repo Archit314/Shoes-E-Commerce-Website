@@ -6,6 +6,7 @@ import toast from "react-hot-toast"
 import { Link } from "react-router-dom";
 
 import { useCategoryStore } from "../store/Category/useCategoryStore";
+import { useBrandStore } from "../store/Brand/useBrandStore";
 
 const featuredProducts = [
   { id: 1, name: "Air Max 270", price: "$120", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
@@ -14,18 +15,12 @@ const featuredProducts = [
   { id: 4, name: "Classic Converse", price: "$90", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
 ];
 
-const brands = [
-  { id: 1, name: "Nike", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
-  { id: 2, name: "Adidas", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
-  { id: 3, name: "Puma", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
-  { id: 4, name: "Converse", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
-  { id: 5, name: "Reebok", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
-];
-
 function HomePage() {
 
   const {getCategories} = useCategoryStore()
+  const {getBrands} = useBrandStore()
   const [categories, setCategories] = useState([])
+  const [brands, setBrands] = useState([])
   
   useEffect(() => {
 console.log('url');
@@ -45,7 +40,20 @@ console.log(import.meta.env.VITE_API_BASE_URL);
       }
     }
 
+    const fetchBrands = async () => {
+      const gotResponse = await getBrands()
+
+      if(gotResponse.status !== 200){
+        toast.error(gotResponse.message)
+      }
+      else{
+        toast.success(gotResponse.message)
+        setBrands(gotResponse.data)
+      }
+    }
+
     fetchCategories()
+    fetchBrands()
 
   }, [])
 
@@ -144,18 +152,18 @@ console.log(import.meta.env.VITE_API_BASE_URL);
             <h2 className="text-3xl font-bold">Brands</h2>
             <button className="flex items-center gap-2 text-white/80 hover:text-white bg-white/10 backdrop-blur-lg px-4 py-2 rounded-full transition">
               View More
-              <span className="text-lg">→</span>
+              <Link to={'/brands'} className="text-lg">→</Link>
             </button>
           </div>
 
           <div className="flex flex-wrap justify-center gap-6">
-            {brands.map((brand) => (
+            {brands.map((brand: {id: string, media: {url: string}[], name:string}) => (
               <div
                 key={brand.id}
                 className="w-28 h-28 flex items-center justify-center bg-white/10 backdrop-blur-lg rounded-full p-4 hover:scale-110 hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] transition-transform duration-300 cursor-pointer"
               >
                 <img
-                  src={brand.img}
+                  src={brand.media[0].url}
                   alt={brand.name}
                   className="w-full h-full rounded-full object-cover"
                 />
