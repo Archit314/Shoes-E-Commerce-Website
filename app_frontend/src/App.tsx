@@ -12,6 +12,7 @@ import CategoryListPage from "./pages/Category/CategoryListPage"
 import AboutPage from "./pages/AboutPage"
 import Footer from "./components/common/Footer"
 import BrandListPage from "./pages/Brand/BrandListPage"
+import CartPage from "./pages/CartPage"
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
         <Route path="/about" element={<AboutPage />}/>
         <Route path="/categories" element={<CategoryListPage />}/>
         <Route path="/brands" element={<BrandListPage />}/>
+        <Route path="/cart" element={<CartPage />}/>
       </Routes>
       <Footer/>
     </div>
