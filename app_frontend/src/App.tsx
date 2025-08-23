@@ -11,6 +11,7 @@ import Navbar from "./components/common/Navbar"
 import CategoryListPage from "./pages/Category/CategoryListPage"
 import AboutPage from "./pages/AboutPage"
 import Footer from "./components/common/Footer"
+import BrandListPage from "./pages/Brand/BrandListPage"
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
         <Route path="/sign-in" element={<SigninPage />}/>
         <Route path="/about" element={<AboutPage />}/>
         <Route path="/categories" element={<CategoryListPage />}/>
+        <Route path="/brands" element={<BrandListPage />}/>
       </Routes>
       <Footer/>
     </div>
