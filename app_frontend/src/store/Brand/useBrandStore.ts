@@ -10,7 +10,7 @@ type BrandStoreResponse = {
 interface BrandStore {
     isGettingBrands: boolean,
     brands: any[],
-    getBrands: () => Promise<BrandStoreResponse>
+    getBrands: (categoryId?: string) => Promise<BrandStoreResponse>
 }
 
 export const useBrandStore = create<BrandStore>((set) => ({
@@ -18,12 +18,13 @@ export const useBrandStore = create<BrandStore>((set) => ({
     isGettingBrands: false,
     brands: [],
 
-    getBrands: async () => {
+    getBrands: async (categoryId?: string) => {
         set({isGettingBrands: true})
 
         try {
 
-            const gotBrands = await axiosInstance.get('/user/brand')
+            const apiEndpoint = categoryId? `/user/brand?categoryId=${categoryId}` : `/user/brand`;
+            const gotBrands = await axiosInstance.get(apiEndpoint)
 
             set({isGettingBrands: false, brands: gotBrands.data.data})
 

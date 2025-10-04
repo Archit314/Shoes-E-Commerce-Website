@@ -13,6 +13,8 @@ import AboutPage from "./pages/AboutPage"
 import Footer from "./components/common/Footer"
 import BrandListPage from "./pages/Brand/BrandListPage"
 import CartPage from "./pages/CartPage"
+import ShopPage from "./pages/ShopPage"
+import ProductDetailPage from "./pages/ProductDetailPage"
 
 function App() {
 
@@ -27,6 +29,10 @@ function App() {
         <Route path="/categories" element={<CategoryListPage />}/>
         <Route path="/brands" element={<BrandListPage />}/>
         <Route path="/cart" element={<CartPage />}/>
+        <Route path="/shop" element={<ShopPage />}/>
+        <Route path="/shop/category/:categoryId" element={<ShopPage />}/>
+        <Route path="/shop/brand/:brandId" element={<ShopPage />}/>
+        <Route path="/product/:id" element={<ProductDetailPage />}/>
       </Routes>
       <Footer/>
     </div>

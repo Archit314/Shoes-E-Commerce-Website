@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useBrandStore } from "../../store/Brand/useBrandStore";
+import { useNavigate } from "react-router-dom";
 
 function BrandListPage() {
 
     const {getBrands, brands} = useBrandStore()
     const [search, setSearch] = useState("");
+    const navigate = useNavigate()
 
     useEffect(() => {
         // Only fetch if no data exists
@@ -51,19 +53,20 @@ function BrandListPage() {
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8">
             {filteredBrands.map(
-              (cat: { id: string; media: { url: string }[]; name: string }) => (
+              (brand: { id: string; media: { url: string }[]; name: string }) => (
                 <div
-                  key={cat.id}
+                  key={brand.id}
+                  onClick={() => navigate(`/shop/brand/${brand.id}`)}
                   className="bg-white/10 backdrop-blur-lg rounded-xl p-4 flex flex-col items-center hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] transition-transform duration-300 cursor-pointer"
                 >
                   <div className="w-24 h-24 mb-3 rounded-lg overflow-hidden bg-white/20 flex items-center justify-center">
                     <img
-                      src={cat.media[0]?.url || "https://via.placeholder.com/150"}
-                      alt={cat.name}
+                      src={brand.media[0]?.url || "https://via.placeholder.com/150"}
+                      alt={brand.name}
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <p className="font-semibold text-center">{cat.name}</p>
+                  <p className="font-semibold text-center">{brand.name}</p>
                 </div>
               )
             )}

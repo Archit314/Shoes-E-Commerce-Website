@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useCategoryStore } from "../../store/Category/useCategoryStore";
+import { useNavigate } from "react-router-dom";
 
 function CategoryListPage() {
   const { getCategories } = useCategoryStore();
   const [categories, setCategories] = useState([]);
   const [search, setSearch] = useState("");
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -55,6 +57,7 @@ function CategoryListPage() {
               (cat: { id: string; media: { url: string }[]; name: string }) => (
                 <div
                   key={cat.id}
+                  onClick={() => navigate(`/shop/category/${cat.id}`)}
                   className="bg-white/10 backdrop-blur-lg rounded-xl p-4 flex flex-col items-center hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] transition-transform duration-300 cursor-pointer"
                 >
                   <div className="w-24 h-24 mb-3 rounded-lg overflow-hidden bg-white/20 flex items-center justify-center">
