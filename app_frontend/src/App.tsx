@@ -15,8 +15,23 @@ import BrandListPage from "./pages/Brand/BrandListPage"
 import CartPage from "./pages/CartPage"
 import ShopPage from "./pages/ShopPage"
 import ProductDetailPage from "./pages/ProductDetailPage"
+import { useAuthStore } from "./store/User/useAuthStore"
+import { useEffect } from "react"
 
 function App() {
+
+  const {authUser, checkAuth, isCheckingAuth} = useAuthStore()
+
+  useEffect(() => {
+    checkAuth()
+  }, [checkAuth])
+
+  console.log(authUser)
+  if(isCheckingAuth && !authUser) return (
+    <div className="flex items-center justify-center h-screen">
+      <span className="loading bg-primary loading-spinner loading-xl"></span>
+    </div>
+  )
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
