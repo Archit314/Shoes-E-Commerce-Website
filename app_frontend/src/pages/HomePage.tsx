@@ -23,7 +23,7 @@ function HomePage() {
   const {getProducts} = useProductStore()
   const [categories, setCategories] = useState([])
   const [brands, setBrands] = useState([])
-  const [featuredProducts, setFeaturedProducts] = useState([])
+  const [featuredProducts, setFeaturedProducts] = useState([] as any[])
   
   useEffect(() => {
 console.log('url');
