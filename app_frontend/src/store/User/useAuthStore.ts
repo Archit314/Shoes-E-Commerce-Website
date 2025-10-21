@@ -15,6 +15,7 @@ interface AuthStore{
     isLoggingOut: boolean,
     checkAuth: () => Promise<AuthStoreResponse<any>>,
     signIn: (formData: {}) => Promise<AuthStoreResponse<any>>,
+    signUp: (formData: {}) => Promise<AuthStoreResponse<any>>,
     logout: () => Promise<AuthStoreResponse<any>>
 }
 
@@ -67,6 +68,32 @@ export const useAuthStore = create<AuthStore>((set) => ({
         } catch (error: any) {
             console.error(error)
             set({isLoggingIn: false})
+            
+            if(error.status == 422){
+                return {status: error.response.data.status, message: error.response.data.message, data: error.response.data.data}
+            }
+            
+            return {status: 500, message: error.message, data: [] }
+        }
+    },
+
+    signUp: async (formData) => {
+
+        set({isSigningUp: true})
+        try {
+            const gotResponse = await axiosInstance.post('/user/sign-up', formData)
+
+            set({isSigningUp: false, authUser: gotResponse.data.data})
+            console.log(gotResponse);
+            
+            return {
+                status: gotResponse.data.status,
+                message: gotResponse.data.message,
+                data: gotResponse.data.data
+            }
+        } catch (error: any) {
+            console.error(error)
+            set({isSigningUp: false})
             
             if(error.status == 422){
                 return {status: error.response.data.status, message: error.response.data.message, data: error.response.data.data}

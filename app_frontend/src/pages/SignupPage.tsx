@@ -1,11 +1,16 @@
 // src/pages/SignupPage.tsx
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/User/useAuthStore";
+import toast from "react-hot-toast";
 
 function SignupPage() {
+  const {signUp} = useAuthStore()
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
-    name: "",
+    fullName: "",
     email: "",
+    mobileNumber: "",
     password: "",
     confirmPassword: "",
   });
@@ -14,9 +19,20 @@ function SignupPage() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form Data:", formData);
+    console.log("Sign Up Data:", formData);
+
+    const requestForSignUp = await signUp(formData)
+    if(requestForSignUp.status === 200){
+      console.log('Signed Up Successfully');
+      toast.success(requestForSignUp.message)
+      navigate('/')
+    }
+    else{
+      console.log('Sign Up Failed');
+      toast.error(requestForSignUp.message)
+    }
   };
 
   return (
@@ -29,8 +45,8 @@ function SignupPage() {
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
           <input
             type="text"
-            name="name"
-            value={formData.name}
+            name="fullName"
+            value={formData.fullName}
             onChange={handleChange}
             placeholder="Full Name"
             className="px-5 py-3 rounded-xl bg-white/20 border border-white/40 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 backdrop-blur-sm"
@@ -44,6 +60,17 @@ function SignupPage() {
             placeholder="Email Address"
             className="px-5 py-3 rounded-xl bg-white/20 border border-white/40 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 backdrop-blur-sm"
             required
+          />
+          <input
+            type="tel" // Using type="tel" is good practice for phone numbers
+            name="mobileNumber"
+            value={formData.mobileNumber}
+            onChange={handleChange}
+            placeholder="Mobile Number"
+            className="px-5 py-3 rounded-xl bg-white/20 border border-white/40 text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 backdrop-blur-sm"
+            required
+            pattern="[0-9]{10}" // Optional: basic validation for a 10-digit number
+            title="Please enter a 10-digit mobile number"
           />
           <input
             type="password"
