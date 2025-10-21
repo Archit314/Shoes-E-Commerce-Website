@@ -13,7 +13,9 @@ interface AuthStore{
     isSigningUp: boolean,
     isCheckingAuth: boolean,
     isLoggingOut: boolean,
-    checkAuth: () => Promise<AuthStoreResponse<any>>
+    checkAuth: () => Promise<AuthStoreResponse<any>>,
+    signIn: (formData: {}) => Promise<AuthStoreResponse<any>>,
+    logout: () => Promise<AuthStoreResponse<any>>
 }
 
 export const useAuthStore = create<AuthStore>((set) => ({
@@ -39,6 +41,58 @@ export const useAuthStore = create<AuthStore>((set) => ({
         } catch (error: any) {
             console.error(error)
             set({isCheckingAuth: false})
+            
+            if(error.status == 422){
+                return {status: error.response.data.status, message: error.response.data.message, data: error.response.data.data}
+            }
+            
+            return {status: 500, message: error.message, data: [] }
+        }
+    },
+
+    signIn: async (formData) => {
+
+        set({isLoggingIn: true})
+        try {
+            const gotResponse = await axiosInstance.post('/user/sign-in', formData)
+
+            set({isLoggingIn: false, authUser: gotResponse.data.data})
+            console.log(gotResponse);
+            
+            return {
+                status: gotResponse.data.status,
+                message: gotResponse.data.message,
+                data: gotResponse.data.data
+            }
+        } catch (error: any) {
+            console.error(error)
+            set({isLoggingIn: false})
+            
+            if(error.status == 422){
+                return {status: error.response.data.status, message: error.response.data.message, data: error.response.data.data}
+            }
+            
+            return {status: 500, message: error.message, data: [] }
+        }
+    },
+
+    logout: async () => {
+
+        set({isLoggingOut: true})
+        try {
+            const gotResponse = await axiosInstance.get('/user/logout')
+
+            set({isLoggingOut: false, authUser: null})
+            console.log(gotResponse);
+            
+            return {
+                status: gotResponse.data.status,
+                message: gotResponse.data.message,
+                data: gotResponse.data.data
+            }
+        } catch (error: any) {
+            console.error(error)
+            set({isLoggingOut: false})
             
             if(error.status == 422){
                 return {status: error.response.data.status, message: error.response.data.message, data: error.response.data.data}

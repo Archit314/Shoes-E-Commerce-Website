@@ -17,6 +17,7 @@ import ShopPage from "./pages/ShopPage"
 import ProductDetailPage from "./pages/ProductDetailPage"
 import { useAuthStore } from "./store/User/useAuthStore"
 import { useEffect } from "react"
+import { Toaster } from "react-hot-toast"
 
 function App() {
 
@@ -49,6 +50,10 @@ function App() {
         <Route path="/shop/brand/:brandId" element={<ShopPage />}/>
         <Route path="/product/:id" element={<ProductDetailPage />}/>
       </Routes>
+      <Toaster
+        position="bottom-left"
+        reverseOrder={false}
+      />
       <Footer/>
     </div>
   )

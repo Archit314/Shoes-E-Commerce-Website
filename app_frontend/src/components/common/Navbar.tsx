@@ -1,15 +1,30 @@
 import { useState } from "react";
-import { ShoppingBag, Menu, X, LogInIcon } from "lucide-react";
+import { ShoppingBag, Menu, X, LogInIcon, LogOutIcon } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../store/User/useAuthStore";
+import toast from "react-hot-toast";
 
 function Navbar() {
   const navigate = useNavigate()
-  const {authUser} = useAuthStore()
+  const {authUser, logout} = useAuthStore()
   const [isOpen, setIsOpen] = useState(false);
 
   const handleLoginClick = () => {
     navigate('/sign-up')
+  }
+
+  const handleLogout = async () => {
+
+    const requestForLogout = await logout()
+    if(requestForLogout.status === 200){
+      console.log('Logged Out Successfully');
+      toast.success(requestForLogout.message)
+      navigate('/')
+    }
+    else{
+      console.log('Logout Failed');
+      toast.error(requestForLogout.message)
+    }
   }
 
   return (
@@ -37,18 +52,18 @@ function Navbar() {
           <LogInIcon />
         </button>
       </div>: <div className="hidden md:block">
-        <button className="flex items-center gap-2 bg-white text-pink-600 hover:bg-pink-600 hover:text-white px-6 py-2 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 font-semibold">
-          "asdfsdf"
+        <button onClick={handleLogout} className="flex items-center gap-2 bg-white text-pink-600 hover:bg-pink-600 hover:text-white px-6 py-2 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 font-semibold">
+          <LogOutIcon/>
         </button>
       </div>}
 
       {/* Mobile Menu Button */}
       <div className="md:hidden flex items-center gap-4">
-        {!authUser? <button className="bg-white text-pink-600 hover:bg-pink-600 hover:text-white p-2 rounded-full shadow-lg transition-all duration-300">
+        {!authUser? <button  onClick={handleLoginClick} className="bg-white text-pink-600 hover:bg-pink-600 hover:text-white p-2 rounded-full shadow-lg transition-all duration-300">
           <LogInIcon size={20} />
         </button>:
-        <button className="bg-white text-pink-600 hover:bg-pink-600 hover:text-white p-2 rounded-full shadow-lg transition-all duration-300">
-          "afsadfsdf"
+        <button onClick={handleLogout} className="bg-white text-pink-600 hover:bg-pink-600 hover:text-white p-2 rounded-full shadow-lg transition-all duration-300">
+          <LogOutIcon/>
         </button>}
         <button
           className="text-white hover:text-pink-300 transition-colors"

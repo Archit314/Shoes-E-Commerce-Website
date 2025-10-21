@@ -1,8 +1,12 @@
 // src/pages/SigninPage.tsx
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/User/useAuthStore";
+import toast from "react-hot-toast";
 
 function SigninPage() {
+  const {signIn} = useAuthStore()
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -12,10 +16,21 @@ function SigninPage() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Sign In Data:", formData);
     // Add your sign-in logic here
+
+    const requestForSignIn = await signIn(formData)
+    if(requestForSignIn.status === 200){
+      console.log('Signed In Successfully');
+      toast.success(requestForSignIn.message)
+      navigate('/')
+    }
+    else{
+      console.log('Sign In Failed');
+      toast.error(requestForSignIn.message)
+    }
   };
 
   return (
