@@ -40,7 +40,11 @@ function Navbar() {
         <Link className="hover:text-pink-300 transition-colors duration-300 cursor-pointer" to={"/shop"}>Shop</Link>
         <Link className="hover:text-pink-300 transition-colors duration-300 cursor-pointer" to={"/about"}>About</Link>
         <Link className="hover:text-pink-300 transition-colors duration-300 cursor-pointer" to={"/"}>Contact</Link>
-        <Link className="hover:text-pink-300 transition-colors duration-300 cursor-pointer" to={"/cart"}><ShoppingBag/></Link>
+        {authUser &&
+          (
+            <Link className="hover:text-pink-300 transition-colors duration-300 cursor-pointer" to={"/cart"}><ShoppingBag/></Link>
+          )
+        }
       </ul>
 
       {/* Auth Button - Desktop */}
@@ -80,7 +84,11 @@ function Navbar() {
           <Link className="list-none hover:text-pink-300 cursor-pointer" to={"/shop"}>Shop</Link>
           <Link className="list-none hover:text-pink-300 cursor-pointer" to={"/about"}>About</Link>
           <Link className="list-none hover:text-pink-300 cursor-pointer" to={"/"}>Contact</Link>
-          <Link className="list-none hover:text-pink-300 cursor-pointer" to={"/cart"}><ShoppingBag/></Link>
+          {authUser &&
+            (
+              <Link className="list-none hover:text-pink-300 cursor-pointer" to={"/cart"}><ShoppingBag/></Link>
+            )
+          }
         </div>
       )}
     </nav>

@@ -1,52 +1,57 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Trash2, Plus, Minus } from "lucide-react";
+import { useCartStore } from "../store/Cart/useCartStore";
+import toast from "react-hot-toast";
 
 function CartPage() {
-  const [items, setItems] = useState([
-    {
-      id: 1,
-      name: "Air Max 270",
-      price: 7999,
-      quantity: 1,
-      image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=500",
-    },
-    {
-      id: 2,
-      name: "Nike Revolution",
-      price: 5999,
-      quantity: 2,
-      image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=500",
-    },
-  ]);
 
-  const increaseQty = (id: number) => {
-    setItems((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
-      )
-    );
-  };
+  const {getCart} = useCartStore()
+  const [items, setItems] = useState([]);
 
-  const decreaseQty = (id: number) => {
-    setItems((prev) =>
-      prev.map((item) =>
-        item.id === id && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      )
-    );
-  };
+  useEffect(() => {
+    const fetchCart = async () => {
+      console.log(`Fetching user cart`);
+      
+      const gotResponse = await getCart();
 
-  const removeFromCart = (id: number) => {
-    setItems((prev) => prev.filter((item) => item.id !== id));
-  };
+      if (gotResponse.status !== 200) {
+        toast.error(gotResponse.message);
+      } else {
+        setItems(gotResponse.data.items);
+      }
+    };
+
+    fetchCart();
+  }, []);
+
+  // const increaseQty = (id: number) => {
+  //   setItems((prev) =>
+  //     prev.map((item) =>
+  //       item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+  //     )
+  //   );
+  // };
+
+  // const decreaseQty = (id: number) => {
+  //   setItems((prev) =>
+  //     prev.map((item) =>
+  //       item.id === id && item.quantity > 1
+  //         ? { ...item, quantity: item.quantity - 1 }
+  //         : item
+  //     )
+  //   );
+  // };
+
+  // const removeFromCart = (id: number) => {
+  //   setItems((prev) => prev.filter((item) => item.id !== id));
+  // };
 
   const clearCart = () => {
     setItems([]);
   };
 
   const total = () =>
-    items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    items.reduce((sum, item: any) => sum + item.price * item.quantity, 0);
 
   return (
     <div className="min-h-screen text-white px-6 md:px-20 py-12 relative overflow-hidden">
@@ -62,14 +67,14 @@ function CartPage() {
         {/* Cart Items */}
         <div className="lg:col-span-2 space-y-6">
           {items.length > 0 ? (
-            items.map((item) => (
+            items.map((item: any) => (
               <div
                 key={item.id}
                 className="flex items-center justify-between bg-white/10 backdrop-blur-lg p-4 rounded-2xl shadow-lg hover:scale-[1.02] transition"
               >
                 <div className="flex items-center gap-4">
                   <img
-                    src={item.image}
+                    src={item.productVariant.media[0].url}
                     alt={item.name}
                     className="w-20 h-20 object-cover rounded-xl shadow-md"
                   />
@@ -81,14 +86,14 @@ function CartPage() {
 
                 <div className="flex items-center gap-3">
                   <button
-                    onClick={() => decreaseQty(item.id)}
+                    // onClick={() => decreaseQty(item.id)}
                     className="p-2 rounded-lg bg-white/10 hover:bg-white/20"
                   >
                     <Minus size={16} />
                   </button>
                   <span className="font-bold">{item.quantity}</span>
                   <button
-                    onClick={() => increaseQty(item.id)}
+                    // onClick={() => increaseQty(item.id)}
                     className="p-2 rounded-lg bg-white/10 hover:bg-white/20"
                   >
                     <Plus size={16} />
@@ -98,7 +103,7 @@ function CartPage() {
                 <div className="flex items-center gap-4">
                   <p className="font-bold">₹{item.price * item.quantity}</p>
                   <button
-                    onClick={() => removeFromCart(item.id)}
+                    // onClick={() => removeFromCart(item.id)}
                     className="p-2 text-red-400 hover:text-red-600"
                   >
                     <Trash2 size={20} />
